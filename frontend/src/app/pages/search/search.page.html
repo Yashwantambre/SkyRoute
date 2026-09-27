@@ -1,0 +1,96 @@
+<section class="hero">
+  <h1>Book Flights</h1>
+  <p>Search, compare, and confirm tickets on SkyRoute.</p>
+</section>
+
+<form class="search-card" (ngSubmit)="search()">
+  <label>
+    From
+    <select name="origin" [(ngModel)]="origin">
+      @for (airport of airports; track airport.code) {
+        <option [value]="airport.code">{{ airport.city }} ({{ airport.code }})</option>
+      }
+    </select>
+  </label>
+  <label>
+    To
+    <select name="destination" [(ngModel)]="destination">
+      @for (airport of airports; track airport.code) {
+        <option [value]="airport.code">{{ airport.city }} ({{ airport.code }})</option>
+      }
+    </select>
+  </label>
+  <label>
+    Travel date
+    <input type="date" name="travelDate" [(ngModel)]="travelDate" />
+  </label>
+  <button type="submit">Search</button>
+</form>
+
+@if (error) {
+  <p class="error">{{ error }}</p>
+}
+@if (message) {
+  <p class="success">{{ message }}</p>
+}
+
+@if (!searched) {
+  <p class="hint">Search a route to compare flights, then select one and add passenger details.</p>
+} @else if (flights.length === 0) {
+  <p class="hint">No flights for this route and date. Try Delhi to Mumbai, or Mumbai to Bengaluru, on the sample travel date.</p>
+} @else {
+  <div class="results-bar">
+    <strong>{{ visibleFlights.length }} flight{{ visibleFlights.length === 1 ? '' : 's' }}</strong>
+    <label>
+      Cabin
+      <select name="cabinFilter" [(ngModel)]="cabinFilter">
+        <option value="ALL">All cabins</option>
+        <option value="ECONOMY">Economy</option>
+        <option value="BUSINESS">Business</option>
+      </select>
+    </label>
+  </div>
+  @if (visibleFlights.length === 0) {
+    <p class="hint">No {{ cabinFilter.toLowerCase() }} flights in these results.</p>
+  }
+  <div class="flights">
+    @for (flight of visibleFlights; track flight.id) {
+      <article class="flight" [class.selected]="selectedFlight?.id === flight.id">
+        <div>
+          <strong>{{ flight.airline }}</strong>
+          <span>{{ flight.flightNumber }} · {{ flight.cabinClass }}</span>
+          <small>{{ flight.originCity }} to {{ flight.destinationCity }}</small>
+        </div>
+        <div class="route">
+          <span>{{ flight.origin }} {{ flight.departureTime | date: 'HH:mm' }}</span>
+          <small>{{ flight.durationMinutes }} min</small>
+          <span>{{ flight.destination }} {{ flight.arrivalTime | date: 'HH:mm' }}</span>
+        </div>
+        <div class="fare">
+          <b>₹{{ flight.price | number: '1.0-0' }}</b>
+          <small>{{ flight.seatsAvailable }} seats left</small>
+          <button type="button" (click)="choose(flight)">
+            {{ selectedFlight?.id === flight.id ? 'Selected' : 'Select' }}
+          </button>
+        </div>
+      </article>
+    }
+  </div>
+}
+
+@if (selectedFlight) {
+  <form class="book-card" (ngSubmit)="book()">
+    <h2>Passenger details</h2>
+    <p class="summary">
+      {{ selectedFlight.airline }} {{ selectedFlight.flightNumber }} ·
+      {{ selectedFlight.originCity }} to {{ selectedFlight.destinationCity }} ·
+      {{ selectedFlight.departureTime | date: 'medium' }}
+    </p>
+    <label>Name <input name="passengerName" [(ngModel)]="passengerName" required /></label>
+    <label>Email <input type="email" name="email" [(ngModel)]="email" required /></label>
+    <label>Phone <input name="phone" [(ngModel)]="phone" placeholder="Optional" /></label>
+    <label>Seats <input type="number" min="1" max="9" name="seats" [(ngModel)]="seats" required /></label>
+    <p class="total">Total ₹{{ estimatedTotal | number: '1.0-0' }}</p>
+    <button type="submit">Confirm booking</button>
+  </form>
+}

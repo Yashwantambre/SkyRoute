@@ -1,0 +1,38 @@
+<h1>My Bookings</h1>
+
+<form class="pnr-search" (ngSubmit)="search()">
+  <label>
+    PNR
+    <input name="pnr" [(ngModel)]="pnr" placeholder="e.g. A1B2C3" />
+  </label>
+  <button type="submit">Find ticket</button>
+  @if (searched) {
+    <button type="button" class="secondary" (click)="showAll()">Show all</button>
+  }
+</form>
+
+@if (error) {
+  <p class="error">{{ error }}</p>
+}
+
+@if (bookings.length === 0 && !error) {
+  <p>{{ searched ? 'No ticket matches that PNR.' : 'No tickets yet. Search a flight and book to see it here.' }}</p>
+} @else if (bookings.length > 0) {
+  <div class="list">
+    @for (booking of bookings; track booking.pnr) {
+      <article class="card">
+        <header>
+          <strong>PNR {{ booking.pnr }}</strong>
+          <span [class.cancelled]="booking.status === 'CANCELLED'">{{ booking.status }}</span>
+        </header>
+        <p>{{ booking.flight.airline }} {{ booking.flight.flightNumber }}</p>
+        <p>{{ booking.flight.originCity }} → {{ booking.flight.destinationCity }}</p>
+        <p>{{ booking.flight.departureTime | date: 'medium' }}</p>
+        <p>{{ booking.passengerName }} · {{ booking.seats }} seat(s) · ₹{{ booking.totalAmount | number: '1.0-0' }}</p>
+        @if (booking.status === 'CONFIRMED') {
+          <button type="button" (click)="cancel(booking.pnr)">Cancel ticket</button>
+        }
+      </article>
+    }
+  </div>
+}

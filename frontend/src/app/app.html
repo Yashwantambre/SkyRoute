@@ -1,0 +1,10 @@
+<header class="topbar">
+  <a routerLink="/" class="brand">SkyRoute</a>
+  <nav>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Search Flights</a>
+    <a routerLink="/bookings" routerLinkActive="active">My Bookings</a>
+  </nav>
+</header>
+<main>
+  <router-outlet />
+</main>

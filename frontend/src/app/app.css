@@ -1,0 +1,38 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  background: #0a2342;
+  color: #fff;
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff6b35;
+  text-decoration: none;
+  letter-spacing: 0.4px;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  color: #d9e6f2;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+nav a.active,
+nav a:hover {
+  color: #ff6b35;
+}
+
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+}

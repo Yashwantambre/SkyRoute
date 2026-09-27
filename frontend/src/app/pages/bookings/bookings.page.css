@@ -1,0 +1,65 @@
+.pnr-search {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 24px rgba(10, 35, 66, 0.08);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #c9d4e3;
+  border-radius: 8px;
+  min-width: 180px;
+}
+
+.list {
+  display: grid;
+  gap: 12px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(10, 35, 66, 0.08);
+}
+
+.card header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.cancelled {
+  color: #b42318;
+  font-weight: 700;
+}
+
+button {
+  background: #0a2342;
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.secondary {
+  background: #fff;
+  color: #0a2342;
+  border: 1px solid #0a2342;
+}
+
+.error {
+  color: #b42318;
+}

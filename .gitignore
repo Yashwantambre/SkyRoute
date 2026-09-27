@@ -1,0 +1,12 @@
+target/
+data/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+.mvn/wrapper/maven-wrapper.jar
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
