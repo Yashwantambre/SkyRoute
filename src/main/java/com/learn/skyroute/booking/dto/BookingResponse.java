@@ -7,30 +7,41 @@ import com.learn.skyroute.booking.Booking;
 import com.learn.skyroute.booking.BookingStatus;
 import com.learn.skyroute.flight.dto.FlightResponse;
 
-public record BookingResponse(
-		Long id,
-		String pnr,
-		FlightResponse flight,
-		String passengerName,
-		String email,
-		String phone,
-		Integer seats,
-		BigDecimal totalAmount,
-		BookingStatus status,
-		LocalDateTime bookedAt) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class BookingResponse {
+
+	private Long id;
+	private String pnr;
+	private FlightResponse flight;
+	private String passengerName;
+	private String email;
+	private String phone;
+	private Integer seats;
+	private BigDecimal totalAmount;
+	private BookingStatus status;
+	private LocalDateTime bookedAt;
 
 	public static BookingResponse from(Booking booking) {
-		return new BookingResponse(
-				booking.getId(),
-				booking.getPnr(),
-				FlightResponse.from(booking.getFlight()),
-				booking.getPassengerName(),
-				booking.getEmail(),
-				booking.getPhone(),
-				booking.getSeats(),
-				booking.getTotalAmount(),
-				booking.getStatus(),
-				booking.getBookedAt());
+		BookingResponse response = new BookingResponse();
+		response.setId(booking.getId());
+		response.setPnr(booking.getPnr());
+		response.setFlight(FlightResponse.from(booking.getFlight()));
+		response.setPassengerName(booking.getPassengerName());
+		response.setEmail(booking.getEmail());
+		response.setPhone(booking.getPhone());
+		response.setSeats(booking.getSeats());
+		response.setTotalAmount(booking.getTotalAmount());
+		response.setStatus(booking.getStatus());
+		response.setBookedAt(booking.getBookedAt());
+		return response;
 	}
 
 }

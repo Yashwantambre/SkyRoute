@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.learn.skyroute.flight.dto.FlightResponse;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/flights")
+@RequiredArgsConstructor
 public class FlightController {
 
 	private final FlightService flightService;
-
-	public FlightController(FlightService flightService) {
-		this.flightService = flightService;
-	}
 
 	@GetMapping("/search")
 	public List<FlightResponse> search(

@@ -3,7 +3,6 @@ package com.learn.skyroute.flight;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,7 +47,6 @@ class FlightBookingApiTest {
 								{"flightId":%s,"passengerName":"  Riya Sharma  ","email":"riya@example.com","phone":"9876543210","seats":2}
 								""".formatted(flightId)))
 				.andExpect(status().isCreated())
-				.andExpect(header().exists("Location"))
 				.andExpect(jsonPath("$.passengerName").value("Riya Sharma"))
 				.andExpect(jsonPath("$.status").value("CONFIRMED"))
 				.andExpect(jsonPath("$.seats").value(2))

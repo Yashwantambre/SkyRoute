@@ -11,9 +11,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "flights")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Flight {
 
 	@Id
@@ -57,9 +62,6 @@ public class Flight {
 	@Column(nullable = false)
 	private CabinClass cabinClass;
 
-	protected Flight() {
-	}
-
 	public Flight(String airline, String flightNumber, String origin, String originCity, String destination,
 			String destinationCity, LocalDateTime departureTime, LocalDateTime arrivalTime, Integer durationMinutes,
 			BigDecimal price, Integer seatsAvailable, CabinClass cabinClass) {
@@ -75,58 +77,6 @@ public class Flight {
 		this.price = price;
 		this.seatsAvailable = seatsAvailable;
 		this.cabinClass = cabinClass;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getAirline() {
-		return airline;
-	}
-
-	public String getFlightNumber() {
-		return flightNumber;
-	}
-
-	public String getOrigin() {
-		return origin;
-	}
-
-	public String getOriginCity() {
-		return originCity;
-	}
-
-	public String getDestination() {
-		return destination;
-	}
-
-	public String getDestinationCity() {
-		return destinationCity;
-	}
-
-	public LocalDateTime getDepartureTime() {
-		return departureTime;
-	}
-
-	public LocalDateTime getArrivalTime() {
-		return arrivalTime;
-	}
-
-	public Integer getDurationMinutes() {
-		return durationMinutes;
-	}
-
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public Integer getSeatsAvailable() {
-		return seatsAvailable;
-	}
-
-	public CabinClass getCabinClass() {
-		return cabinClass;
 	}
 
 	public void reserveSeats(int seats) {

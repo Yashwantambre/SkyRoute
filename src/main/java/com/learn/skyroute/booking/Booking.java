@@ -15,9 +15,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "bookings")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Booking {
 
 	@Id
@@ -52,9 +57,6 @@ public class Booking {
 	@Column(nullable = false)
 	private LocalDateTime bookedAt;
 
-	protected Booking() {
-	}
-
 	public Booking(String pnr, Flight flight, String passengerName, String email, String phone, Integer seats,
 			BigDecimal totalAmount, BookingStatus status, LocalDateTime bookedAt) {
 		this.pnr = pnr;
@@ -66,46 +68,6 @@ public class Booking {
 		this.totalAmount = totalAmount;
 		this.status = status;
 		this.bookedAt = bookedAt;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getPnr() {
-		return pnr;
-	}
-
-	public Flight getFlight() {
-		return flight;
-	}
-
-	public String getPassengerName() {
-		return passengerName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public Integer getSeats() {
-		return seats;
-	}
-
-	public BigDecimal getTotalAmount() {
-		return totalAmount;
-	}
-
-	public BookingStatus getStatus() {
-		return status;
-	}
-
-	public LocalDateTime getBookedAt() {
-		return bookedAt;
 	}
 
 	public void cancel() {

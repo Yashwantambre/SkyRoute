@@ -1,9 +1,20 @@
 package com.learn.skyroute.booking.dto;
 
-public record CreateBookingRequest(
-		Long flightId,
-		String passengerName,
-		String email,
-		String phone,
-		Integer seats) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreateBookingRequest {
+
+	private Long flightId;
+	private String passengerName;
+	private String email;
+	private String phone;
+	private Integer seats;
+
 }

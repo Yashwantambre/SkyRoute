@@ -15,7 +15,12 @@ import org.springframework.stereotype.Component;
 import com.learn.skyroute.airport.Airport;
 import com.learn.skyroute.airport.AirportCatalog;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class FlightDataLoader implements CommandLineRunner {
 
 	private static final int DAYS_TO_SEED = 30;
@@ -26,10 +31,6 @@ public class FlightDataLoader implements CommandLineRunner {
 			new Airline("SpiceJet", "SG"));
 
 	private final FlightRepository flightRepository;
-
-	public FlightDataLoader(FlightRepository flightRepository) {
-		this.flightRepository = flightRepository;
-	}
 
 	@Override
 	public void run(String... args) {
@@ -92,25 +93,43 @@ public class FlightDataLoader implements CommandLineRunner {
 		Airport origin = airports.get(originIndex);
 		Airport destination = airports.get(destinationIndex);
 		Airline airline = AIRLINES.get((originIndex * airports.size() + destinationIndex + slot) % AIRLINES.size());
-		CabinClass cabinClass = slot == 0 ? CabinClass.ECONOMY : CabinClass.BUSINESS;
+
+		CabinClass cabinClass;
+		if (slot == 0) {
+			cabinClass = CabinClass.ECONOMY;
+		} else {
+			cabinClass = CabinClass.BUSINESS;
+		}
 
 		int routeNumber = 100 + (originIndex * airports.size() + destinationIndex) * 2 + slot;
-		int hour = slot == 0
-				? 6 + (originIndex + destinationIndex) % 5
-				: 16 + (originIndex + destinationIndex) % 5;
+		int hour;
+		if (slot == 0) {
+			hour = 6 + (originIndex + destinationIndex) % 5;
+		} else {
+			hour = 16 + (originIndex + destinationIndex) % 5;
+		}
+
 		int minute = ((originIndex * 3 + destinationIndex * 2 + slot) % 12) * 5;
 		int durationMinutes = 70 + (originIndex * 31 + destinationIndex * 17) % 111;
 		long economyPrice = 2400L + durationMinutes * 18L + (originIndex + destinationIndex) * 90L;
-		long price = cabinClass == CabinClass.BUSINESS ? economyPrice * 2 : economyPrice;
-		int seats = cabinClass == CabinClass.BUSINESS ? 18 : 72;
+
+		long price;
+		int seats;
+		if (cabinClass == CabinClass.BUSINESS) {
+			price = economyPrice * 2;
+			seats = 18;
+		} else {
+			price = economyPrice;
+			seats = 72;
+		}
 
 		Flight flight = flight(
-				airline.name(),
-				airline.prefix() + " " + routeNumber,
-				origin.code(),
-				origin.city(),
-				destination.code(),
-				destination.city(),
+				airline.getName(),
+				airline.getPrefix() + " " + routeNumber,
+				origin.getCode(),
+				origin.getCity(),
+				destination.getCode(),
+				destination.getCity(),
 				date,
 				LocalTime.of(hour, minute),
 				durationMinutes,
@@ -139,7 +158,12 @@ public class FlightDataLoader implements CommandLineRunner {
 				departureTime.plusMinutes(durationMinutes), durationMinutes, new BigDecimal(price), seats, cabinClass);
 	}
 
-	private record Airline(String name, String prefix) {
+	@Getter
+	@AllArgsConstructor
+	private static class Airline {
+
+		private String name;
+		private String prefix;
 	}
 
 }

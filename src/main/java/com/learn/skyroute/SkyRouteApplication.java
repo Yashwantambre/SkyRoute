@@ -10,5 +10,4 @@ public class SkyRouteApplication {
 		SpringApplication.run(SkyRouteApplication.class, args);
 		System.out.println("SkyRouteApplication Started");
 	}
-
 }

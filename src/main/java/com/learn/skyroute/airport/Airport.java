@@ -1,4 +1,18 @@
 package com.learn.skyroute.airport;
 
-public record Airport(String code, String city, String name) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Airport {
+
+	private String code;
+	private String city;
+	private String name;
+
 }

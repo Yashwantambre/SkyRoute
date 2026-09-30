@@ -6,36 +6,47 @@ import java.time.LocalDateTime;
 import com.learn.skyroute.flight.CabinClass;
 import com.learn.skyroute.flight.Flight;
 
-public record FlightResponse(
-		Long id,
-		String airline,
-		String flightNumber,
-		String origin,
-		String originCity,
-		String destination,
-		String destinationCity,
-		LocalDateTime departureTime,
-		LocalDateTime arrivalTime,
-		Integer durationMinutes,
-		BigDecimal price,
-		Integer seatsAvailable,
-		CabinClass cabinClass) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class FlightResponse {
+
+	private Long id;
+	private String airline;
+	private String flightNumber;
+	private String origin;
+	private String originCity;
+	private String destination;
+	private String destinationCity;
+	private LocalDateTime departureTime;
+	private LocalDateTime arrivalTime;
+	private Integer durationMinutes;
+	private BigDecimal price;
+	private Integer seatsAvailable;
+	private CabinClass cabinClass;
 
 	public static FlightResponse from(Flight flight) {
-		return new FlightResponse(
-				flight.getId(),
-				flight.getAirline(),
-				flight.getFlightNumber(),
-				flight.getOrigin(),
-				flight.getOriginCity(),
-				flight.getDestination(),
-				flight.getDestinationCity(),
-				flight.getDepartureTime(),
-				flight.getArrivalTime(),
-				flight.getDurationMinutes(),
-				flight.getPrice(),
-				flight.getSeatsAvailable(),
-				flight.getCabinClass());
+		FlightResponse response = new FlightResponse();
+		response.setId(flight.getId());
+		response.setAirline(flight.getAirline());
+		response.setFlightNumber(flight.getFlightNumber());
+		response.setOrigin(flight.getOrigin());
+		response.setOriginCity(flight.getOriginCity());
+		response.setDestination(flight.getDestination());
+		response.setDestinationCity(flight.getDestinationCity());
+		response.setDepartureTime(flight.getDepartureTime());
+		response.setArrivalTime(flight.getArrivalTime());
+		response.setDurationMinutes(flight.getDurationMinutes());
+		response.setPrice(flight.getPrice());
+		response.setSeatsAvailable(flight.getSeatsAvailable());
+		response.setCabinClass(flight.getCabinClass());
+		return response;
 	}
 
 }

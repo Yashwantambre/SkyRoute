@@ -1,4 +1,18 @@
 package com.learn.skyroute.error;
 
-public record ApiError(int status, String error, String message) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class ApiError {
+
+	private int status;
+	private String error;
+	private String message;
+
 }
